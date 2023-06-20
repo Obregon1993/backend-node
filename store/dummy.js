@@ -11,9 +11,13 @@ const get = async (table, id) => {
   return collection.filter((item) => item.id === id)[0] || null;
 };
 
-const upsert = async (table, data) => {
+async function upsert(table, data) {
+  if (!db[table]) {
+    db[table] = [];
+  }
+
   db[table].push(data);
-};
+}
 
 const remove = async (table, id) => {
   return true;
