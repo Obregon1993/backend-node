@@ -3,7 +3,7 @@ const db = {
 };
 
 const list = async (table) => {
-  return db[table];
+  return db[table] || [];
 };
 
 const get = async (table, id) => {
@@ -23,9 +23,17 @@ const remove = async (table, id) => {
   return true;
 };
 
+async function query(table, query) {
+  let collection = await list(table);
+  let keys = Object.keys(query);
+  let key = keys[0];
+  return collection.filter((item) => item[key] === query[key])[0] || null;
+}
+
 module.exports = {
   list,
   get,
   upsert,
   remove,
+  query,
 };
